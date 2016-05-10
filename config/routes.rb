@@ -20,6 +20,10 @@ Rails.application.routes.draw do
   get '/orders', to: 'orders#index', as: 'orders'
   post '/orders/', to: 'orders#create'
 
+namespace :user do
+  resources :loan_requests, only: [:new, :create, :show]
+end
+
   # namespace admin, resources items, resources users, only show
   get    '/admin/items', to: 'admin/items#index', as: 'admin_items'
   post   '/admin/items', to: 'admin/items#create'

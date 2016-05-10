@@ -24,11 +24,12 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'figaro'
 gem 'paperclip'
 gem 'aws-sdk', '< 2.0'
-# gem 'unicorn'
+gem 'unicorn'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'rspec-rails'
   gem 'database_cleaner'
   gem 'capybara'
   gem 'launchy'
