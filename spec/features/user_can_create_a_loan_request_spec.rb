@@ -16,14 +16,17 @@ RSpec.feature "User can create a loan request" do
 
     assert_equal new_user_loan_request_path, current_path
 
-    fill_in "Loan Amount", with: "$3000"
+    fill_in "Loan Amount", with: "3000"
     fill_in "Maximum Interest Rate", with: "20"
     click_on "Submit Loan Request"
+
+save_and_open_page
+
     request = LoanRequest.last
 
     assert_equal user_loan_request_path(request), current_path
     assert page.has_content? request.amount
-    assert page.has_content? request.max_interest_rate
+    assert page.has_content? request.max_int_rate
   
   end
 end

@@ -6,6 +6,7 @@ class User::LoanRequestsController < User::BaseController
 
   def create
     @loan_request = LoanRequest.new(loan_request_params)
+    @loan_request.user_id = current_user.id
     if @loan_request.save
       redirect_to user_loan_request_path(@loan_request)
     else
@@ -14,7 +15,8 @@ class User::LoanRequestsController < User::BaseController
   end
 
   def show
-
+    @user = current_user
+    @loan_request = current_user.loan_requests.find(params[:id])
   end
 
   private
