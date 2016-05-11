@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.feature "User can create a loan request" do
   scenario "existing user can create loan request" do
     create_user
-    user = User.first
+    user = User.last
 
     visit '/login'
     fill_in "E-Mail", with: user.email
@@ -14,17 +14,15 @@ RSpec.feature "User can create a loan request" do
 
     click_on "Create a Loan Request"
 
-    assert_equal new_user_loan_request_path, current_path
+    assert_equal new_loan_request_path, current_path
 
     fill_in "Loan Amount", with: "3000"
     fill_in "Maximum Interest Rate", with: "20"
     click_on "Submit Loan Request"
-
-save_and_open_page
-
+    
     request = LoanRequest.last
 
-    assert_equal user_loan_request_path(request), current_path
+    assert_equal "/#{user.username}/loan_requests/#{request.id}", current_path
     assert page.has_content? request.amount
     assert page.has_content? request.max_int_rate
   

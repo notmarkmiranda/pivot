@@ -20,9 +20,18 @@ Rails.application.routes.draw do
   get '/orders', to: 'orders#index', as: 'orders'
   post '/orders/', to: 'orders#create'
 
-namespace :user do
-  resources :loan_requests, only: [:new, :create, :show]
-end
+  resources :loan_requests, only: [:index, :create, :new, :update, :destroy]
+
+  # get    '/loan_requests', to: '/loan_requests#index', as: 'user_loan_requests'
+  # post   '/loan_requests', to: '/loan_requests#create'
+  # get    '/loan_requests/new', to: '/loan_requests#new', as: 'new_user_loan_request'
+  # patch  '/loan_requests/:id', to: '/loan_requests#update'
+  # delete '/loan_requests/:id', to: '/loan_requests#destroy'
+
+  get    '/:username/loan_requests/:id/edit', to: 'user/loan_requests#edit', as: 'edit_user_loan_request'
+  get    '/:username/loan_requests/:id', to: 'user/loan_requests#show', as: 'user_loan_request'
+ 
+
 
   # namespace admin, resources items, resources users, only show
   get    '/admin/items', to: 'admin/items#index', as: 'admin_items'
@@ -34,7 +43,7 @@ end
   delete '/admin/items/:id', to: 'admin/items#destroy'
   get    '/admin/users/:id', to: 'admin/users#show', as: 'admin_user'
   get "/order", to: "orders#show"
-  get "/dashboard", to: "users#show"
+  get "/dashboard", to: "users#show", as: 'dashboard'
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"

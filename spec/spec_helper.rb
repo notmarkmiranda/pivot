@@ -128,14 +128,14 @@ RSpec.configure do |config|
       state: Faker::Address.state_abbr,
       zipcode: Faker::Address.zip_code,
       password: "password",
+      username: Faker::Internet.user_name,
       role: role)
     end
   end
 
-  def login_user(user)
-    visit login_path
-    
-  end
+  # def login_user(user)
+  #   visit login_path
+  # end
 
 
 
