@@ -5,14 +5,11 @@
 </head>
 <body>
   <div class="wrapper">
-    <%= render partial: "shared/navbar"%>
-
     <% flash.each do |type, message| %>
-      <%= content_tag :div, message.html_safe, class: type %>
+      <%= content_tag :div, message.html_safe, class: "alert alert-#{type}" %>
     <% end %>
-
+    <%= render partial: "shared/navbar"%>
     <%= yield %>
-
     <%= render partial: "shared/footer" %>
     <%= render partial: "shared/bscript" %>
   </div>
