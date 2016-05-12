@@ -19,13 +19,9 @@ Rails.application.routes.draw do
   get '/orders', to: 'orders#index', as: 'orders'
   post '/orders/', to: 'orders#create'
 
-  resources :loan_requests, only: [:index, :create, :new, :update, :destroy]
+  resources :loan_requests, only: [:index, :create, :new, :edit, :update, :destroy]
 
-  # get    '/loan_requests', to: '/loan_requests#index', as: 'user_loan_requests'
-  # post   '/loan_requests', to: '/loan_requests#create'
-  # get    '/loan_requests/new', to: '/loan_requests#new', as: 'new_user_loan_request'
-  # patch  '/loan_requests/:id', to: '/loan_requests#update'
-  # delete '/loan_requests/:id', to: '/loan_requests#destroy'
+
 
   get    '/:username/loan_requests/', to: 'user/loan_requests#index', as: 'user_loan_requests'
   get    '/:username/loan_requests/:id/edit', to: 'user/loan_requests#edit', as: 'edit_user_loan_request'
