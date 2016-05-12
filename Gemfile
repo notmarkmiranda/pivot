@@ -36,7 +36,12 @@ group :development, :test do
   gem 'byebug'
   gem 'faker'
   gem 'mocha'
+  gem 'rspec-mocks'
   gem 'shoulda'
+
+  gem 'rspec-core' 
+  gem 'rspec-expectations'
+  gem 'rspec-support'
 end
 
 group :development do

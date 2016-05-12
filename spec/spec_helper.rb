@@ -133,6 +133,12 @@ RSpec.configure do |config|
     end
   end
 
+  def create_loan_request(num=1)
+    num.times do
+      LoanRequest.create(amount: rand(100..10000), max_int_rate: rand(1.0..20.0))
+    end
+  end
+
   # def login_user(user)
   #   visit login_path
   # end

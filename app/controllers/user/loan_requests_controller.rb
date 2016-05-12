@@ -1,7 +1,7 @@
 class User::LoanRequestsController < User::BaseController
 
   def index
-    @loan_requests = current_user.loan_requests
+    @user = current_user
   end
 
   def show

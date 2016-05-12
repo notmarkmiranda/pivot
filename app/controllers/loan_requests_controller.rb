@@ -14,6 +14,9 @@
     end
   end
 
+  def index
+    @loan_requests = LoanRequest.all
+  end
     private
 
   def loan_request_params
