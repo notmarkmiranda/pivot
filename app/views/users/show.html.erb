@@ -61,12 +61,10 @@
 			<nav>
 				<ul class="nav nav-pills nav-stacked">
 					<li role="presentation"><a href="#">Edit My Profile</a></li>
-					<li role="presentation"><a href="#">Create New Loan Offering</a></li>
-					<li role="presentation"><a href="#">Create New Loan Request</a></li>
-					<li role="presentation"><a href="#">View Open Loan Offerings</a></li>
-					<li role="presentation"><a href="#">View Past Loan Offerings</a></li>
-					<li role="presentation"><a href="#">View Open Loan Requests</a></li>
-					<li role="presentation"><a href="#">View Past Loan Requests</a></li>
+					<li role="presentation"><%= link_to "Create a Loan Offer", new_loan_offer_path %></li>
+					<li role="presentation"><%= link_to "Create a Loan Request", new_loan_request_path %></li>
+					<li role="presentation"><%= link_to "View My Loan Offers", user_loan_offers_path(@user.username) %></li>
+					<li role="presentation"><%= link_to "View My Loan Requests", user_loan_requests_path(@user.username) %></li>
 				</ul>
 			</nav>
 		</div>
