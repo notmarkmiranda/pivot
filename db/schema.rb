@@ -35,6 +35,17 @@ ActiveRecord::Schema.define(version: 20160511203122) do
 
   add_index "items", ["category_id"], name: "index_items_on_category_id", using: :btree
 
+  create_table "loan_offers", force: :cascade do |t|
+    t.integer  "rate"
+    t.integer  "term"
+    t.integer  "amount"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "loan_offers", ["user_id"], name: "index_loan_offers_on_user_id", using: :btree
+
   create_table "loan_requests", force: :cascade do |t|
     t.integer  "user_id"
     t.decimal  "amount"
@@ -79,6 +90,7 @@ ActiveRecord::Schema.define(version: 20160511203122) do
   end
 
   add_foreign_key "items", "categories"
+  add_foreign_key "loan_offers", "users"
   add_foreign_key "loan_requests", "users"
   add_foreign_key "order_items", "items"
   add_foreign_key "order_items", "orders"
