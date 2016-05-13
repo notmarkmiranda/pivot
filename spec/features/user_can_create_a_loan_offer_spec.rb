@@ -5,21 +5,24 @@ RSpec.feature "User can create a loan offer" do
     create_user
     user = User.last
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
-    
-    visit '/'
-    click_on "Create a Loan Request"
 
-    assert_equal new_loan_request_path, current_path
+    visit '/dashboard'
 
-    fill_in "Loan Amount", with: "3000"
-    fill_in "Maximum Interest Rate", with: "20"
-    click_on "Submit Loan Request"
+    click_on "Create a Loan Offer"
 
-    request = LoanRequest.last
+    assert_equal new_loan_offer_path, current_path
 
-    assert_equal "/#{user.username}/loan_requests/#{request.id}", current_path
-    assert page.has_content? request.amount
-    assert page.has_content? request.max_int_rate
+    fill_in "Amount", with: "3000"
+    fill_in "Rate", with: "20"
+    fill_in "Term", with: "20"
+    click_on "Let's Go!"
+
+    offer = LoanOffer.last
+
+    expect(current_path).to  eq("/#{user.username}/loan_offers/#{offer.id}")
+    expect(page).to have_content(offer.amount)
+    expect(page).to have_content(offer.rate)
+    expect(page).to have_content(offer.term)
 
   end
 end
