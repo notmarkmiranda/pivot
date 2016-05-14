@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
 
   get    '/:username/loan_requests/', to: 'user/loan_requests#index', as: 'user_loan_requests'
-  get    '/:username/loan_requests/:id/edit', to: 'user/loan_requests#edit', as: 'edit_user_loan_request'
+  # get    '/:username/loan_requests/:id/edit', to: 'user/loan_requests#edit', as: 'edit_user_loan_request'
   get    '/:username/loan_requests/:id', to: 'user/loan_requests#show', as: 'user_loan_request'
  
 

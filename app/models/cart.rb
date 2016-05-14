@@ -17,19 +17,11 @@ class Cart
   end
 
   def count_all
-    contents.values.sum
-  end
-
-  def count_of(item_id)
-    contents[item_id.to_s]
+    contents.keys.count
   end
 
   def remove_item(item_id)
     contents.delete(item_id)
-  end
-
-  def update(item_id, qty)
-    contents[item_id.to_s] = qty
   end
 
   def total_price
@@ -37,7 +29,7 @@ class Cart
       return 0
     else
       mapped_values.map do |ci|
-        ci.subtotal
+        ci.amount
       end.reduce(:+)
     end
   end
