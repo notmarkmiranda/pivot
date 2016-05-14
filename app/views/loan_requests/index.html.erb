@@ -4,7 +4,7 @@
 <div class="req-<%= req.id %>">
 	Loan Request # <%= req.id %><br>
 	Amount: <%= req.amount %><br>
-	Max Interest Rate: <%= req.max_int_rate %><br>
+	Rate: <%= req.rate %><br>
 	<%= button_to "Add to Cart", cart_items_path(item_id: req.id), class:"btn" %><br>
 </div>
 <% end %>
