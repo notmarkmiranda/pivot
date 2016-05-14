@@ -12,7 +12,7 @@
 					<div class="cart-header">
 						<div class="cart-item-info">
 							<h3>Loan Request ID #<%= item.id %><span></span></h3>
-							Requested by: <%= link_to item.user.username, user_loan_requests_path(item.user) %>
+							Requested by: <%= link_to item.user.username, "/#{item.user.username}/loan_requests/" %>
 							<%= button_to "X", cart_item_path(item), class: "btn btn-warning btn-xs", method: :delete %>
 						</div>
 						<h4>Loan Amount: <%= number_to_currency(item.amount) %></h4>

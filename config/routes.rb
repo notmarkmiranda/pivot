@@ -53,4 +53,6 @@ Rails.application.routes.draw do
 
   get "/:category", to: "categories#show"
   # get "/*page", to: "errors#not_found"
+
+  get "/viewloans", to: "pages#viewloans"
 end

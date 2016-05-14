@@ -3,20 +3,20 @@ class CartItemsController < ApplicationController
   def create
     set_redirect
     item = LoanRequest.find(params[:item_id])
-    @cart.add_item(params[:class], item.id)
-    flash[:notice] = "Loan saved to cart."
-    session[:cart] = @cart.contents
-    redirect_to session[:redirect]
+    if @cart.contents.include?(item.id.to_s)
+      flash[:warning] = "Loan is already in cart."
+    elsif item.user == current_user
+      flash[:warning] = "You cannot accept your own loan."
+    else
+      @cart.add_item(item.id)
+      flash[:notice] = "Loan saved to cart."
+      session[:cart] = @cart.contents
+    end
+      redirect_to session[:redirect]
   end
 
   def index
-    @items = @cart.mapped_values || {}
-  end
-
-  def update
-    qty = params[:session][:quantity].to_i
-    @cart.update(params[:item_id], qty)
-    redirect_to cart_path
+    @items = @cart.mapped_values || []
   end
 
   def destroy
