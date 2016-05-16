@@ -2,11 +2,11 @@ Rails.application.routes.draw do
 
   root to: "pages#splash"
 
-  get '/items', to: 'items#index'
-  get '/items/:id', to: 'items#show', as: 'item'
+  # get '/items', to: 'items#index'
+  # get '/items/:id', to: 'items#show', as: 'item'
 
-  get '/users/new', to: 'users#new', as: 'new_user'
-  post '/users', to: 'users#create', as: 'users'
+  resources :users, only: [:new, :create, :index, :show, :destroy]
+  get "/dashboard", to: "users#dashboard", as: 'dashboard'
 
   post '/cart_items', to: 'cart_items#create'
   delete '/cart_items/:id', to: 'cart_items#destroy'
@@ -17,10 +17,9 @@ Rails.application.routes.draw do
   post '/contracts', to: 'contracts#create', as: 'contracts'
   resources :contracts, only: [:new]
 
-  get    '/:username/loan_requests/', to: 'user/loan_requests#index', as: 'user_loan_requests'
-  get    '/:username/loan_requests/:id', to: 'user/loan_requests#show', as: 'user_loan_request'
+  get '/:username/loan_requests/', to: 'user/loan_requests#index', as: 'user_loan_requests'
+  get '/:username/loan_requests/:id', to: 'user/loan_requests#show', as: 'user_loan_request'
 
-  get "/dashboard", to: "users#show", as: 'dashboard'
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
   get "/logout", to: "sessions#destroy"
