@@ -5,7 +5,7 @@ class LoanOffersController < ApplicationController
   end
 
   def new
-    if current_user
+    if current_user && !current_admin?
       @loan_offer = LoanOffer.new
     else
       redirect_to login_path
