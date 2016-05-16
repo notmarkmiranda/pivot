@@ -7,10 +7,10 @@ class Cart
 
   def mapped_values
     requests = contents[:requests].map do |id|
-      CartItem.new(id.to_i)
+      CartItem.new(id.to_i, LoanRequest)
     end
     offers = contents[:offers].map do |id|
-      CartItem.new(id.to_i)
+      CartItem.new(id.to_i, LoanOffer)
     end
     [requests, offers]
   end
@@ -24,20 +24,28 @@ class Cart
   end
 
   def offers_count
-    contents[:requests].count
+    contents[:offers].count
   end
 
-  def remove_item(item_id)
-    contents.delete(item_id)
+  def count_all
+    requests_count + offers_count
+  end
+
+  def remove_item(item_id, obj)
+    obj == LoanOffer ? contents[:offers].delete(item_id) : contents[:requests].delete(item_id)
   end
 
   def total_price
     if contents.empty?
       return 0
     else
-      mapped_values[0].map do |ci|
+      req = mapped_values[0].map do |ci|
         ci.amount
       end.reduce(:+)
+      off = mapped_values[1].map do |ci|
+        ci.amount
+      end.reduce(:+)
+      req.to_f + off.to_f
     end
   end
 end
