@@ -6,7 +6,7 @@ RSpec.feature "User can add loan requests to cart" do
         create_user(2)
         owner = User.last
         create_loan_request(1, owner.id)
-        ApplicationController.any_instance.stub(:current_user).and_return(User.first)
+        # ApplicationController.any_instance.stub(:current_user).and_return(User.first)
     end
 
     scenario "user can create add a loan request to their cart" do
@@ -14,8 +14,8 @@ RSpec.feature "User can add loan requests to cart" do
 
         visit "/loan_requests"
         click_on "Add To Cart"
-
         visit cart_path
+
 
         expect(page).to have_content ActionController::Base.helpers.number_to_currency(request.amount)
         expect(page).to have_content request.rate
