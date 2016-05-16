@@ -3,10 +3,15 @@ class CartItemsController < ApplicationController
   def create
     set_redirect
     id, obj, valid, message = CartAddManager.call(request.referrer, params[:item_id], @cart.contents, current_user)
-    @cart.add_item(id, obj) if valid
-    session[:cart] = @cart.contents
-    flash[:now] = message
-    redirect_to session[:redirect]
+    if !valid
+      flash[:now] = message
+    else
+      @cart.add_item(id, obj)
+      session[:cart] = @cart.contents
+      flash[:success] = message
+      redirect_to session[:redirect]
+    end
+    
   end
 
   def index
