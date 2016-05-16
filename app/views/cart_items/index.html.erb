@@ -38,7 +38,7 @@
 
 
 			<% if current_user %>
-			<% if @cart.contents["requests"].empty? %>
+			<% if @cart.contents[:requests].empty? %>
 			<% else %>
 			<%= button_to "Place Order", new_contract_path, class: "contract", method: "get" %>
 			<% end %>
@@ -83,7 +83,7 @@
 
 
 			<% if current_user %>
-			<% if @cart.contents["requests"].empty? %>
+			<% if @cart.contents[:offers].empty? %>
 			<% else %>
 			<%= button_to "Place Order", new_contract_path, class: "contract", method: "get" %>
 			<% end %>

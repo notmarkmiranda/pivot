@@ -2,9 +2,9 @@ class CartAddManager
   attr_reader :message, :valid
 
   def self.call(referrer, id, cart, user)
-    binding.pry
     @user = user
-    referrer.include?('offers') ? add_item(id, LoanOffer, cart["offers"]) : add_item(id, LoanRequest, cart["requests"])
+    cart.transform_keys! { |k| k.to_sym }
+    referrer.include?('offers') ? add_item(id, LoanOffer, cart[:offers]) : add_item(id, LoanRequest, cart[:requests])
   end
 
   def self.add_item(id, obj, cart)

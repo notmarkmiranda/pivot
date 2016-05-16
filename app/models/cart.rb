@@ -6,25 +6,26 @@ class Cart
   end
 
   def mapped_values
-    requests = contents["requests"].map do |id|
+    contents.transform_keys! { |k| k.to_sym }
+    requests = contents[:requests].map do |id|
       CartItem.new(id.to_i, LoanRequest)
     end
-    offers = contents["offers"].map do |id|
+    offers = contents[:offers].map do |id|
       CartItem.new(id.to_i, LoanOffer)
     end
     [requests, offers]
   end
 
   def add_item(item_id, obj)
-    obj == LoanOffer ? contents["offers"] << item_id.to_s : contents["requests"] << item_id.to_s
+    obj == LoanOffer ? contents[:offers] << item_id.to_s : contents[:requests] << item_id.to_s
   end
 
   def requests_count
-    contents["requests"].count
+    contents[:requests].count
   end
 
   def offers_count
-    contents["offers"].count
+    contents[:offers].count
   end
 
   def count_all
@@ -32,7 +33,7 @@ class Cart
   end
 
   def remove_item(item_id, obj)
-    obj == LoanOffer ? contents["offers"].delete(item_id) : contents["requests"].delete(item_id)
+    obj == LoanOffer ? contents[:offers].delete(item_id) : contents[:requests].delete(item_id)
   end
 
   def req_price

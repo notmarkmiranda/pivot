@@ -40,7 +40,7 @@ RSpec.describe Cart, type: :model do
     refute cart.contents[:offers].include?("1")
   end
 
-  it "calculates the total cost of all items" do
+  it "calculates the total cost of all requests" do
     create_loan_request(2)
     item1 = LoanRequest.first
     item2 = LoanRequest.last
@@ -48,7 +48,7 @@ RSpec.describe Cart, type: :model do
     cart = Cart.new({requests: [item1.id, item2.id], offers: []})
     expected = (item1.amount + item2.amount)
 
-    assert_equal expected, cart.total_price
+    assert_equal expected, cart.req_price
   end
 
 end
