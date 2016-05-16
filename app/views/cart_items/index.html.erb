@@ -14,7 +14,7 @@
 						<div class="cart-item-info">
 							<h3>Loan Request ID #<%= item.id %><span></span></h3>
 							Requested by: <%= link_to item.user.username, "/#{item.user.username}/loan_requests/" %>
-							<%= button_to "X", cart_item_path(item), class: "btn btn-warning btn-xs", method: :delete, params: {item_class: item.class} %>
+							<%= button_to "X", cart_item_path(item), class: "btn btn-warning btn-xs", method: :delete, params: {item_class: "request"} %>
 						</div>
 						<h4>Loan Amount: <%= number_to_currency(item.amount) %></h4>
 						<h4>Rate: <%= item.rate %>% </h4>
@@ -42,8 +42,7 @@
 		</span>
 
 			<% if current_user %>
-			<% if @cart.contents[:requests].empty? %>
-			<% else %>
+			<% unless @cart.contents[:requests].empty? && @cart.contents[:offers].empty? %>
 			<%= button_to "Place Order", new_contract_path, class: "contract", method: "get" %>
 			<% end %>
 			<% else %>
@@ -63,7 +62,7 @@
 						<div class="cart-item-info">
 							<h3>Loan Offer ID #<%= item.id %><span></span></h3>
 							Offered by: <%= link_to item.user.username, "/#{item.user.username}/loan_offers/" %>
-							<%= button_to "X", cart_item_path(item), class: "btn btn-warning btn-xs", method: :delete, params: {item_class: item.class} %>
+							<%= button_to "X", cart_item_path(item), class: "btn btn-warning btn-xs", method: :delete, params: {item_class: "offer"} %>
 						</div>
 						<h4>Loan Amount: <%= number_to_currency(item.amount) %></h4>
 						<h4>Rate: <%= item.rate %>% </h4>

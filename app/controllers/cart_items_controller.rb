@@ -18,7 +18,7 @@ class CartItemsController < ApplicationController
   end
 
   def destroy
-    item = LoanRequest.find(params[:id])
+    params[:item_class] == "request" ? item = LoanRequest.find(params[:id]) : item = LoanOffer.find(params[:id]) 
     @cart.remove_item(params[:id], item.class)
     flash[:notice] = "Successfully removed <a href=\"/#{item.user.username}/loan_requests/#{item.id}\"> loan</a>!"
     redirect_to cart_path
