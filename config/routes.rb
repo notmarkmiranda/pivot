@@ -12,20 +12,13 @@ Rails.application.routes.draw do
   delete '/cart_items/:id', to: 'cart_items#destroy'
   patch '/cart_items/:id', to: 'cart_items#update', as: 'cart_item'
   get '/cart_items/:id', to: 'cart_items#edit', as: 'edit_cart_item'
-  
+
+  resources :loan_requests, only: [:index, :create, :new, :edit, :update, :destroy]
   post '/contracts', to: 'contracts#create', as: 'contracts'
   resources :contracts, only: [:new]
 
-  get    '/admin/items', to: 'admin/items#index', as: 'admin_items'
-  post   '/admin/items', to: 'admin/items#create'
-  get    '/admin/items/new', to: 'admin/items#new', as: 'new_admin_item'
-  get    '/admin/items/:id/edit', to: 'admin/items#edit', as: 'edit_admin_item'
-  get    '/admin/items/:id', to: 'admin/items#show', as: 'admin_item'
-  patch  '/admin/items/:id', to: 'admin/items#update'
-  delete '/admin/items/:id', to: 'admin/items#destroy'
-  get    '/admin/users/:id', to: 'admin/users#show', as: 'admin_user'
-  
-  get "/dashboard", to: "users#show", as: 'dashboard'
+  get '/:username/loan_requests/', to: 'user/loan_requests#index', as: 'user_loan_requests'
+  get '/:username/loan_requests/:id', to: 'user/loan_requests#show', as: 'user_loan_request'
 
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
@@ -33,11 +26,7 @@ Rails.application.routes.draw do
   get "/cart", to: "cart_items#index"
   get "/admin/dashboard", to: "admin/users#show"
 
-  resources :loan_requests, except: [:show]
   resources :loan_offers, except: [:show]
-
-  get '/:username/loan_requests/', to: 'user/loan_requests#index', as: 'user_loan_requests'
-  get '/:username/loan_requests/:id', to: 'user/loan_requests#show', as: 'user_loan_request'
 
   get ':username/loan_offers', to: 'user/loan_offers#index', as: 'user_loan_offers'
   get ':username/loan_offers/:id', to: 'user/loan_offers#show', as: 'user_loan_offer'
