@@ -9,11 +9,7 @@
 			<% @loan_offers.each_slice(4) do |loans| %>
 				<div class="row">
 					<% loans.each.with_index(1) do |loan, index| %>
-
-
-
 							<div class="col-md-3">
-
 						<div class="list-group">
 							<div class="list-group-item">
 								<h4 class="list-group-item-heading">Offer ID #<%= loan.id %></h4>
@@ -37,7 +33,6 @@
 								<%= button_to "Add To Cart", cart_items_path(item_id: loan.id), method: 'post', class:"link-button index-page" %>
 							</div>
 						</div>
-							</div>
 					<% end %>
 				</div>
 			<% end %>

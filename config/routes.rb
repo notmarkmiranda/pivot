@@ -2,11 +2,11 @@ Rails.application.routes.draw do
 
   root to: "pages#splash"
 
-  get '/items', to: 'items#index'
-  get '/items/:id', to: 'items#show', as: 'item'
+  # get '/items', to: 'items#index'
+  # get '/items/:id', to: 'items#show', as: 'item'
 
-  get '/users/new', to: 'users#new', as: 'new_user'
-  post '/users', to: 'users#create', as: 'users'
+  resources :users, only: [:new, :create, :index, :destroy]
+  get "/dashboard", to: "users#dashboard", as: 'dashboard'
 
   post '/cart_items', to: 'cart_items#create'
   delete '/cart_items/:id', to: 'cart_items#destroy'
@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   get    '/admin/users/:id', to: 'admin/users#show', as: 'admin_user'
   
   get "/dashboard", to: "users#show", as: 'dashboard'
+
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
   get "/logout", to: "sessions#destroy"
@@ -41,10 +42,9 @@ Rails.application.routes.draw do
   get ':username/loan_offers', to: 'user/loan_offers#index', as: 'user_loan_offers'
   get ':username/loan_offers/:id', to: 'user/loan_offers#show', as: 'user_loan_offer'
 
-
   get "/viewloans", to: "pages#viewloans"
-
-  get '/:current_username/contracts', to: 'user/contracts#index', as: 'user_contracts'  
+  get "/users/:username", to: "users#show"
+  get '/:current_username/contracts', to: 'user/contracts#index', as: 'user_contracts'
 
   get "/createloans", to: "pages#createloans"
   get "/:category", to: "categories#show"
