@@ -43,7 +43,7 @@ class LoanRequestsController < ApplicationController
       loan_request = LoanRequest.find(params[:id])
       user = loan_request.user
       loan_request.destroy
-      redirect_to user_path(user.id)
+      redirect_to user_path(user.username)
     else
       flash[:message] = "Access Denied"
       redirect_to "/"
