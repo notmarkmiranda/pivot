@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.feature "User can delete a loan request" do
 
-
     before(:each) do
         create_user(2)
         ApplicationController.any_instance.stub(:current_user).and_return(User.first)

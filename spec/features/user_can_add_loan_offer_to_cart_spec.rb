@@ -2,29 +2,29 @@ require "rails_helper"
 
 RSpec.feature "User can add loan requests to cart" do
 
-    before(:each) do
+     before(:each) do
         create_user(2)
         owner = User.last
         create_loan_request(1, owner.id)
         ApplicationController.any_instance.stub(:current_user).and_return(User.first)
     end
 
-    scenario "user can add a loan request to their cart" do
-        request = LoanRequest.last
+    scenario "user can add a loan offer to their cart" do
+        offer = LoanOffer.last
 
-        visit "/loan_requests"
+        visit "/loan_offers"
         click_on "Add To Cart"
 
         visit cart_path
 
-        expect(page).to have_content ActionController::Base.helpers.number_to_currency(request.amount)
-        expect(page).to have_content request.rate
+        expect(page).to have_content ActionController::Base.helpers.number_to_currency(offer.amount)
+        expect(page).to have_content offer.rate
     end
 
-    scenario "user cannot add a loan request to their cart twice" do
-        request = LoanRequest.last
+    scenario "user cannot add a loan offer to their cart twice" do
+        offer = LoanOffer.last
 
-        visit loan_requests_path
+        visit loan_offers_path
 
         click_on "Add To Cart"
         click_on "Add To Cart"
