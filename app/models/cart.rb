@@ -33,6 +33,7 @@ class Cart
   end
 
   def remove_item(item_id, obj)
+    contents.transform_keys! { |k| k.to_sym }
     obj == LoanOffer ? contents[:offers].delete(item_id) : contents[:requests].delete(item_id)
   end
 

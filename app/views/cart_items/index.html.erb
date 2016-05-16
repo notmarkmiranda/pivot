@@ -30,12 +30,16 @@
 	<div class="cart-total">
 		<div class="price-details">
 			<h3>Price Details</h3>
-			<span><%= @cart.requests_count %> Loan Requests</span>
+			<span><%= @cart.requests_count %> Loan Requests</span><br>
+			<span><%= @cart.offers_count %> Loan Offers</span>
 			<div class="clearfix"></div>
 		</div>
-		<span class="total final"><h4 class="last-price">TOTAL: <%= number_to_currency(@cart.req_price) %> in loan requests
+		<span class="total final">
+			<h4 class="last-price">TOTAL:</h4>
+			<h4 class="last-price"><%= number_to_currency(@cart.req_price) %> in <%= pluralize(@cart.requests_count, "loan request") %></h4>
+			<h4 class="last-price"><%= number_to_currency(@cart.off_price) %> in <%= pluralize(@cart.offers_count, "loan offer") %></h4>
 			<div class="clearfix"></div>
-
+		</span>
 
 			<% if current_user %>
 			<% if @cart.contents[:requests].empty? %>
@@ -71,26 +75,4 @@
 		</table>
 	</div>
 
-<div class="col-md-3 total-box">
-	<div class="cart-total">
-		<div class="price-details">
-			<h3>Price Details</h3>
-			<span><%= @cart.offers_count %> Loan Offers</span>
-			<div class="clearfix"></div>
-		</div>
-		<span class="total final"><h4 class="last-price">TOTAL: <%= number_to_currency(@cart.off_price) %>in loan offers</h4>
-			<div class="clearfix"></div>
-
-
-			<% if current_user %>
-			<% if @cart.contents[:offers].empty? %>
-			<% else %>
-			<%= button_to "Place Order", new_contract_path, class: "contract", method: "get" %>
-			<% end %>
-			<% else %>
-			<%= button_to "Login to Checkout", login_path, method: :get, class:"contract" %>
-			<% end %>
-
-		</div>
-	</div>
 </div></div>
