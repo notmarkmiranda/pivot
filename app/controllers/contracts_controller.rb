@@ -17,6 +17,7 @@ class ContractsController < ApplicationController
       @loan_offers.each do |lo|
         current_user.borrowed.create(loan_offer_id: lo.id, lender_id: lo.user_id)
       end
+      binding.pry
     redirect_to user_contracts_path(current_user.username)
   end
 

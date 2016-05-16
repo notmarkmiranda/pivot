@@ -1,8 +1,20 @@
+Money Lent:<br>
 <% @l_contracts.each do |contract| %>
 Lender: <%= contract.lender.first_name + " " + contract.lender.last_name %><br>  
 Borrower: <%= contract.borrower.first_name + " " + contract.borrower.last_name %><br>  
 Amount: <%= contract.loan_request.amount %><br>
 Term: <%= contract.loan_request.term %> Months<br>
 Rate: <%= contract.loan_request.rate %>%<br>
+Status: <%= contract.status %><br>
+<% end %>
+<br>
+Money Borrowed:<br>
+<% @b_contracts.each do |contract| %>
+<% binding.pry %>
+Lender: <%= contract.lender.first_name + " " + contract.lender.last_name %><br>  
+Borrower: <%= contract.borrower.first_name + " " + contract.borrower.last_name %><br>  
+Amount: <%= contract.loan_offer.amount %><br>
+Term: <%= contract.loan_offer.term %> Months<br>
+Rate: <%= contract.loan_offer.rate %>%<br>
 Status: <%= contract.status %><br>
 <% end %>
