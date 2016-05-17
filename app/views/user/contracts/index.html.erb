@@ -5,7 +5,27 @@
         <h2><%= current_user.username.capitalize %>'s Contracts</h2>
       </div>
     </div>
-    <%= render partial: "user/contracts/contracts", locals: { contracts: @b_contracts, request_or_offer: "offer", lender: "Borrower"} %>
-    <%= render partial: "user/contracts/contracts", locals: { contracts: @l_contracts, request_or_offer: "request", lender: "Lender"} %>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h4>As a Lender:</h4>
+          </div>
+          <% @l_contracts.each do |c| %>
+            <%= render partial: "shared/contract_index", locals: { c:c, loan_type: "request" } %>
+          <% end %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h4>As a Borrower:</h4>
+          </div>
+          <% @b_contracts.each do |c| %>
+            <%= render partial: "shared/contract_index", locals: { c:c, loan_type: "offer"} %>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
