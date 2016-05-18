@@ -6,4 +6,6 @@ class LoanOffer < ActiveRecord::Base
   def self.active_loan_offers
     LoanOffer.where(active:true).size
   end
+
+
 end
