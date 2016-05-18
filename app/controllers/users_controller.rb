@@ -12,6 +12,8 @@ class UsersController < ApplicationController
       session[:username] = @user.username
       flash[:notice] = "Logged in as #{@user.first_name} #{@user.last_name}"
       redirect_to session[:redirect]
+      UserNotifier.welcome(current_user, params[:email]).deliver_now
+      
     else
       flash.now[:error] = @user.errors.full_messages.join(", ")
       render :new
@@ -42,6 +44,8 @@ class UsersController < ApplicationController
       user.loan_requests.update_all(active: false)
       user.loan_offers.update_all(active: false)
       user.update(active: false) #move this to model
+      UserNotifier.unwelcome(user, user.email).deliver_now
+      
       redirect_to users_path
     else
       flash[:danger] = "You don't have permission"
