@@ -99,4 +99,18 @@ RSpec.describe User, type: :model do
     expect(user1.net_worth).to eq expected
   end
 
+  it "can return active users" do
+    create_user(2)
+    expect(User.active_users).to eq 2
+
+    User.last.update(active: false)
+    expect(User.active_users).to eq 1
+  end
+
+  it "can return inactive users" do
+    create_user(2)
+    expect(User.inactive_users).to eq 0
+    User.last.update(active: false)
+    expect(User.inactive_users).to eq 1
+  end
 end

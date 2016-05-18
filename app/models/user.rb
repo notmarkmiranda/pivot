@@ -66,4 +66,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.active_users
+    User.where(active:true).size
+  end
+
+  def self.inactive_users
+    User.where(active:false).size
+  end
+
 end
