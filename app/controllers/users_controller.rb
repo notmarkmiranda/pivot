@@ -13,7 +13,7 @@ class UsersController < ApplicationController
       flash[:notice] = "Logged in as #{@user.first_name} #{@user.last_name}"
       redirect_to session[:redirect]
     else
-      flash.now[:error] = @user.errors.full_messages.join(", ")
+      flash.now[:danger] = @user.errors.full_messages.join("<br />")
       render :new
     end
   end
