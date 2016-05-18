@@ -87,6 +87,8 @@ RSpec.configure do |config|
       city: Faker::Address.city,
       state: Faker::Address.state_abbr,
       zipcode: Faker::Address.zip_code,
+      image_path: photo_url,
+      description: Faker::Commerce.department,
       password: "password",
       username: first_name.downcase,
       role: role)
@@ -114,5 +116,13 @@ RSpec.configure do |config|
     end
     Contract.all
   end
+
+  private
+
+  def photo_url
+    fetcher = Fotofetch::Fetch.new
+    photo_url = fetcher.fetch_links("SEARCHTERM").values.first
+  end
+
 
 end
