@@ -10,10 +10,10 @@ class SessionsController < ApplicationController
     user = User.find_by(username: params[:session][:username])
     if user && user.authenticate(params[:session][:password])
       if params[:remember_me]
-      cookies.permanent![:auth_token] = user.auth_token
-    else
-      cookies[:auth_token] = user.auth_token
-    end
+        cookies.permanent![:auth_token] = user.auth_token
+      else
+        cookies[:auth_token] = user.auth_token
+      end
 
       if current_admin?
         redirect_to admin_dashboard_path
@@ -25,7 +25,7 @@ class SessionsController < ApplicationController
         redirect_to dashboard_path, success: "yay!"
       end
     else
-      flash.now[:danger] = "Invalid Credentials"
+      flash[:danger] = "Invalid Credentials"
       render :new
     end
   end

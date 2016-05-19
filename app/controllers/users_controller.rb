@@ -10,12 +10,10 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       cookies[:auth_token] = @user.auth_token
-      flash[:notice] = "Logged in as #{@user.first_name} #{@user.last_name}"
-      redirect_to dashboard_path
+      redirect_to dashboard_path, notice: "Logged in as #{@user.first_name} #{@user.last_name}"
       UserNotifier.welcome(@user, @user.email).deliver_now
     else
-      flash.now[:danger] = @user.errors.full_messages.join(", ")
-      render :new
+      render :new, danger: @user.errors.full_messages.join(", ")
     end
   end
 
@@ -33,23 +31,13 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    path = UserDeactivator.call(current_user.id, params[:id])
     if current_user && !current_admin?
-      current_user.loan_requests.update_all(active: false)
-      current_user.loan_offers.update_all(active: false)
-      current_user.active_update
-      UserNotifier.unwelcome(current_user, current_user.email).deliver_now
       redirect_to logout_path
     elsif current_admin?
-      user = User.find(params[:id])
-      user.loan_requests.update_all(active: false)
-      user.loan_offers.update_all(active: false)
-      user.active_update
-      UserNotifier.unwelcome(user, user.email).deliver_now
-      redirect_to users_path, success: "deactivated!"
-
+      redirect_to users_path, success: "Account deactivated!"
     else
-      flash[:danger] = "You don't have permission"
-      redirect_to "/"
+      redirect_to root_path, danger: "You don't have permission"
     end
   end
 

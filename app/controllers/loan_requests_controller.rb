@@ -35,18 +35,15 @@ class LoanRequestsController < ApplicationController
     end
   end
 
-  def destroy
+    def destroy
+    owner = LoanRequest.find(params[:id]).user
+    LoanRequestDestroyer.call(current_user.id, params[:id])
     if current_user && !current_admin?
-      current_user.loan_requests.delete(params[:id])
-      redirect_to user_loan_requests_path(current_user.username), danger: "Loan Request Deleted!"
+      redirect_to user_loan_requests_path(current_user.username), danger: "Loan Offer Deleted!"
     elsif current_admin?
-      loan_request = LoanRequest.find(params[:id])
-      user = loan_request.user
-      loan_request.destroy
-      redirect_to user_path(user.username)
+      redirect_to user_path(owner.username)
     else
-      flash[:message] = "Access Denied"
-      redirect_to "/"
+      redirect_to "/", danger: "Access Denied"
     end
   end
 

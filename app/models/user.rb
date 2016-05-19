@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
   end
 
   def active_update
-    update(active:false)
+    update!(active:false)
   end
 
    def send_password_reset

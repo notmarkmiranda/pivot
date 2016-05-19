@@ -17,8 +17,7 @@ class LoanOffersController < ApplicationController
     if current_user.loan_offers << loan_offer
       redirect_to user_loan_offer_path(current_user.username, loan_offer.id), success: "yay!"
     else
-      flash[:error] = loan_offer.errors.full_messages.join(", ")
-      redirect_to new_loan_offer_path
+      redirect_to new_loan_offer_path, error: loan_offer.errors.full_messages.join(", ")
     end
   end
 
@@ -31,20 +30,17 @@ class LoanOffersController < ApplicationController
     if loan_offer.update(loan_offer_params)
       redirect_to user_loan_offer_path(current_user.username, loan_offer.id)
     else
-      flash[:error] = loan_offer.errors.full_messages.join(", ")
-      redirect_to new_loan_offer_path
+      redirect_to new_loan_offer_path, error: loan_offer.errors.full_messages.join(", ")
     end
   end
 
   def destroy
+    owner = LoanOffer.find(params[:id]).user
+    LoanOfferDestroyer.call(current_user.id, params[:id])
     if current_user && !current_admin?
-      current_user.loan_offers.delete(params[:id])
       redirect_to user_loan_offers_path(current_user.username), danger: "Loan Offer Deleted!"
     elsif current_admin?
-      loan_offer = LoanOffer.find(params[:id])
-      user = loan_offer.user
-      loan_offer.destroy
-      redirect_to user_path(user.username)
+      redirect_to user_path(owner.username)
     else
       redirect_to "/", danger: "Access Denied"
     end
