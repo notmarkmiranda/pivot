@@ -47,12 +47,11 @@ class User < ActiveRecord::Base
     update(active:false)
   end
 
-   def send_password_reset(user_id)
-      user = User.find(user_id)
+   def send_password_reset
       generate_token(:password_reset_token)
-      user.password_reset_sent_at = Time.zone.now
-      binding.pry
-      UserNotifier.forgot_password(user, user.email).deliver_now
+      self.password_reset_sent_at = Time.zone.now
+      save!
+      UserNotifier.forgot_password(self).deliver_now
     end
 
 
