@@ -12,8 +12,7 @@ class UsersController < ApplicationController
       session[:username] = @user.username
       flash[:notice] = "Logged in as #{@user.first_name} #{@user.last_name}"
       redirect_to session[:redirect]
-      UserNotifier.welcome(current_user, params[:email]).deliver_now
-      
+      UserNotifier.welcome(@user, @user.email).deliver_now
     else
       flash.now[:error] = @user.errors.full_messages.join(", ")
       render :new
@@ -38,6 +37,7 @@ class UsersController < ApplicationController
       current_user.loan_requests.update_all(active: false)
       current_user.loan_offers.update_all(active: false)
       current_user.update(active: false) #move this to model
+      UserNotifier.unwelcome(current_user, current_user.email).deliver_now
       redirect_to logout_path
     elsif current_admin?
       user = User.find(params[:id])
