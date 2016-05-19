@@ -62,11 +62,9 @@
 				<ul class="nav nav-pills nav-stacked">
 					<li role="presentation"><%= link_to "View #{@user.first_name}'s Loan Offers", user_loan_offers_path(@user.username) %></li>
 					<li role="presentation"><%= link_to "View #{@user.first_name}'s Loan Requests", user_loan_requests_path(@user.username) %></li>
-					<li role="presentation"><%= link_to "Delete #{@user.first_name}'s Account", user_path(@user.id), method: :delete %></li>
+					<li role="presentation"><%= button_to "Deactivate #{@user.first_name}'s Account", user_path(@user.id), method: :delete, class:"deactivate" %></li>
 				</ul>
 			</nav>
-		</div>
-		<div class="col-md-3 user-menu">
 		</div>
 	</div>
 </div>
