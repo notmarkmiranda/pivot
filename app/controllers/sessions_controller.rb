@@ -8,8 +8,6 @@ class SessionsController < ApplicationController
   def create
     set_redirect
     user = User.find_by(username: params[:session][:username])
-    SessionCreator.call(user.id, user.authenticate(params[:session][:password])
-      
     if user && user.authenticate(params[:session][:password])
       if params[:remember_me]
         cookies.permanent![:auth_token] = user.auth_token
@@ -27,7 +25,7 @@ class SessionsController < ApplicationController
         redirect_to dashboard_path, success: "yay!"
       end
     else
-      flash.now[:danger] = "Invalid Credentials"
+      flash[:danger] = "Invalid Credentials"
       render :new
     end
   end
