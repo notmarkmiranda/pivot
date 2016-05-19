@@ -10,13 +10,10 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       cookies[:auth_token] = @user.auth_token
-      flash[:notice] = "Logged in as #{@user.first_name} #{@user.last_name}"
-      redirect_to dashboard_path
+      redirect_to dashboard_path, notice: "Logged in as #{@user.first_name} #{@user.last_name}"
       UserNotifier.welcome(@user, @user.email).deliver_now
     else
-      flash.now[:danger] = @user.errors.full_messages.join(", ")
-      redirect_to session[:redirect]
-      render :new
+      render :new, danger: @user.errors.full_messages.join(", ")
     end
   end
 
@@ -46,11 +43,9 @@ class UsersController < ApplicationController
       user.loan_offers.update_all(active: false)
       user.active_update
       UserNotifier.unwelcome(user, user.email).deliver_now
-      redirect_to users_path, success: "deactivated!"
-
+      redirect_to users_path, success: "Account deactivated!"
     else
-      flash[:danger] = "You don't have permission"
-      redirect_to "/"
+      redirect_to root_path, danger: "You don't have permission"
     end
   end
 
