@@ -91,5 +91,4 @@ class User < ActiveRecord::Base
       User.where(active:false).size
     end
 
-
 end
