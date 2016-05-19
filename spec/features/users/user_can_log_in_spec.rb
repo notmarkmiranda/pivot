@@ -25,8 +25,6 @@ RSpec.feature "User can login" do
     fill_in "Password", with: "password"
     click_on "Log in"
 
-    save_and_open_page
-    
     expect(current_path).to eq "/"
     expect(page).to have_link "Log In"
   end

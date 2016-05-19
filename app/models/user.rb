@@ -47,6 +47,21 @@ class User < ActiveRecord::Base
     update(active:false)
   end
 
+   def send_password_reset(user_id)
+      user = User.find(user_id)
+      generate_token(:password_reset_token)
+      user.password_reset_sent_at = Time.zone.now
+      binding.pry
+      UserNotifier.forgot_password(user, user.email).deliver_now
+    end
+
+
+    def generate_token(column)
+      begin
+        self[column] = SecureRandom.urlsafe_base64
+      end while User.exists?(column => self[column])
+    end
+
   private
 
     def active_loans(side)
@@ -77,10 +92,5 @@ class User < ActiveRecord::Base
       User.where(active:false).size
     end
 
-    def generate_token(column)
-      begin
-        self[column] = SecureRandom.urlsafe_base64
-      end while User.exists?(column => self[column])
-    end
 
 end
