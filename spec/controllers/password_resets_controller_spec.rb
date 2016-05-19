@@ -29,13 +29,14 @@ RSpec.describe PasswordResetsController, type: :controller do
       post :create, email: nonuser_email
 
       expect(response).to redirect_to root_url
+      assert_equal 'No user found with that email address.', flash[:warning] 
     end
 
   end
 
   describe "GET #edit" do
 
-    it "returns http success" do
+    it "returns http success with appropriate params" do
       create_user
       user = User.last
       user.update!(password_reset_token: "abc")
@@ -45,21 +46,5 @@ RSpec.describe PasswordResetsController, type: :controller do
     end
     
   end
-
-# describe "POST #edit" do
-
-#     it "something" do
-#       create_user
-#       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(User.last)
-#       user = User.last
-#       original_pw = user.password_digest
-#       user.update!(password_reset_token: "abc")
-
-#       post :edit, {id: "abc", password: "onetwo", password_confirmation: "onetwo"}
-
-#       binding.pry
-#     end
-    
-#   end
 
 end
