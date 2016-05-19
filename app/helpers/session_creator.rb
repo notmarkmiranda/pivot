@@ -1,16 +1,8 @@
-class SessionsController < ApplicationController
+class SessionCreator
 
-  def new
-    set_redirect
-    redirect_to dashboard_path(current_user.id) if current_user
-  end
-
-  def create
-    set_redirect
-    user = User.find_by(username: params[:session][:username])
-    SessionCreator.call(user.id, user.authenticate(params[:session][:password])
-      
-    if user && user.authenticate(params[:session][:password])
+def self.call(user_id)
+  user = User.find(user_id, user_authenticated)
+   if user_id && user_authenticated
       if params[:remember_me]
         cookies.permanent![:auth_token] = user.auth_token
       else
@@ -30,12 +22,5 @@ class SessionsController < ApplicationController
       flash.now[:danger] = "Invalid Credentials"
       render :new
     end
-  end
 
-  def destroy
-    cookies.delete(:auth_token)
-    session.clear
-    @current_user = nil
-    redirect_to root_path, success: "logged out!"
-  end
 end

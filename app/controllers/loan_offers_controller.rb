@@ -17,8 +17,7 @@ class LoanOffersController < ApplicationController
     if current_user.loan_offers << loan_offer
       redirect_to user_loan_offer_path(current_user.username, loan_offer.id), success: "yay!"
     else
-      flash[:error] = loan_offer.errors.full_messages.join(", ")
-      redirect_to new_loan_offer_path
+      redirect_to new_loan_offer_path, error: loan_offer.errors.full_messages.join(", ")
     end
   end
 
@@ -31,8 +30,7 @@ class LoanOffersController < ApplicationController
     if loan_offer.update(loan_offer_params)
       redirect_to user_loan_offer_path(current_user.username, loan_offer.id)
     else
-      flash[:error] = loan_offer.errors.full_messages.join(", ")
-      redirect_to new_loan_offer_path
+      redirect_to new_loan_offer_path, error: loan_offer.errors.full_messages.join(", ")
     end
   end
 
