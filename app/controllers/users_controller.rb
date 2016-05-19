@@ -10,8 +10,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:username] = @user.username
-      flash[:success] = "Logged in as #{@user.first_name} #{@user.last_name}"
-      redirect_to dashboard_path
+      flash[:notice] = "Logged in as #{@user.first_name} #{@user.last_name}"
+      redirect_to session[:redirect]
+      UserNotifier.welcome(@user, @user.email).deliver_now
     else
       flash.now[:danger] = @user.errors.full_messages.join(", ")
       render :new
@@ -36,13 +37,16 @@ class UsersController < ApplicationController
       current_user.loan_requests.update_all(active: false)
       current_user.loan_offers.update_all(active: false)
       current_user.active_update
+      UserNotifier.unwelcome(current_user, current_user.email).deliver_now
       redirect_to logout_path
     elsif current_admin?
       user = User.find(params[:id])
       user.loan_requests.update_all(active: false)
       user.loan_offers.update_all(active: false)
       user.active_update
+      UserNotifier.unwelcome(user, user.email).deliver_now
       redirect_to users_path, success: "deactivated!"
+
     else
       flash[:danger] = "You don't have permission"
       redirect_to "/"
