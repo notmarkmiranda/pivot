@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'password_resets/new'
+
   root to: "pages#splash"
 
   resources :users, only: [:new, :create, :index, :destroy]
@@ -35,7 +37,12 @@ Rails.application.routes.draw do
   get "/users/:username", to: "users#show"
   get "/:current_username/contracts", to: "user/contracts#index", as: "user_contracts"
 
-  get "/:category", to: "categories#show"
-  get "/*page", to: "errors#not_found"
+  resources :password_resets, only: [:new, :create, :edit, :update]
   post '/notification' => 'notification#create'
+
+  get "/:category", to: "categories#show"
+  
+  post '/notification' => 'notification#create'
+  get "/*page", to: "errors#not_found"
+
 end
