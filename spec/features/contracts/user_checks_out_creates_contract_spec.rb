@@ -30,9 +30,7 @@ RSpec.feature "User checkout creates contract" do
     click_button "Submit"
     contract1 = Contract.first
     contract2 = Contract.last
-
     expect(current_path).to eq(user_contracts_path(@user2.username))
-
     expect(page).to have_content ActionController::Base.helpers.number_to_currency(contract1.loan_request.amount)
     expect(page).to have_content contract1.loan_request.term
     expect(page).to have_content contract1.loan_request.rate
