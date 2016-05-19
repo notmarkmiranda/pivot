@@ -1,7 +1,7 @@
 class ContractsController < ApplicationController
 
   def new
-    if current_user
+    if current_user && session[:cart]
       cart = session[:cart].transform_keys { |k| k.to_sym }
       @loan_requests = cart[:requests].map { |lr| LoanRequest.find(lr) }
       @loan_offers = cart[:offers].map { |lo| LoanOffer.find(lo) }
